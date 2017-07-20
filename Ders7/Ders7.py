@@ -35,8 +35,42 @@ def resize_demo():
 
 	
 def rotation_demo():
-	pass
+	wName = "Rotation Demo  "
+	print wName," : Press + or - for Rotation Angel * or / for scale "
+	oImg = cv2.imread("../datas/manzara.jpg")
+	cv2.imshow(wName,oImg)
 
+	rAngle = 0
+	scale = 1
+	while True:	
+		key = cv2.waitKey(-1)		
+		if key == ord('+'):
+			rAngle += 10
+			if rAngle >= 360 :
+				rAngle = rAngle%360
+
+		elif key == ord('-'):
+			rAngle -= 10
+			if rAngle < 0 :
+				rAngle += 360
+				
+		elif key == ord('*'):
+			scale *=1.1
+
+		elif key == ord('/'):
+			scale /=1.1			
+				
+		elif key == 27:
+			break		
+		else:
+			continue
+			
+		rotationMat = cv2.getRotationMatrix2D((oImg.shape[1]/2,oImg.shape[0]/2),rAngle,scale)
+		outImg  = cv2.warpAffine(oImg,rotationMat,(oImg.shape[1],oImg.shape[0]))
+		cv2.imshow(wName,outImg)
+		
+	cv2.destroyWindow(wName)
+			
 def affine_transform_demo():
 	pass
 
