@@ -65,13 +65,12 @@ def FrameDiffDemo():
 	cv2.destroyAllWindows()	
 	
 def BackgroundSubDemo(methodName):
-	wName="BackgroundSub " + methodName +" Demo	
-	print  wName	
-	
+	wName="BackgroundSub " + methodName +" Demo	"
+	print  wName		
 	if methodName == "MOG":
 		bsMethod = cv2.createBackgroundSubtractorMOG()
 	elif methodName == "MOG2":
-		bsMethod = cv2.createBackgroundSubtractorMOG2()
+		bsMethod = cv2.createBackgroundSubtractorMOG2(detectShadows=False)
 	elif methodName == "KNN":
 		bsMethod = cv2.createBackgroundSubtractorKNN()	
 	elif methodName == "GMG":
