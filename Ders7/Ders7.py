@@ -72,7 +72,34 @@ def rotation_demo():
 	cv2.destroyWindow(wName)
 			
 def affine_transform_demo():
-	pass
+	wName = "Affine Transform Demo "
+	print wName," count "
+	oImg = cv2.imread("../datas/RLetters.png")
+	cv2.imshow(wName,oImg)	
+	print "Gray Scale "
+	cv2.waitKey(0)
+	tImg = cv2.cvtColor(oImg,cv2.COLOR_BGR2GRAY)
+	_,tImg = cv2.threshold(tImg,200,255,cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)
+	cv2.imshow(wName,tImg)
+	cv2.waitKey(0)	
+	image, contours, hierarchy = cv2.findContours(tImg,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+	out_image = np.zeros((oImg.shape[0],oImg.shape[1],3),np.uint8)
+	destCorners = np.float32([[0,63],[0,0],[63,0]])
+	for cnt in contours:
+		out_image = cv2.drawContours(out_image, [cnt], 0, (255,0,0), -1)		
+		rRect = cv2.minAreaRect(cnt)		
+		box = cv2.boxPoints(rRect)
+		box = np.int0(box)
+		corners = np.float32(box[:3])
+		out_image = cv2.drawContours(out_image,[box],0,(0,0,255),2)			
+		warpMat = cv2.getAffineTransform(corners ,destCorners )		
+		outLetter  = cv2.warpAffine(oImg,warpMat,(64,64))
+		out_image[:64,:64] = outLetter
+		cv2.imshow("out Letter",outLetter)
+		cv2.imshow(wName,out_image)
+		cv2.waitKey(0)
+	cv2.destroyAllWindows()
+
 
 def perspective_transform_demo():
 	pass
@@ -80,8 +107,8 @@ def perspective_transform_demo():
 
 if __name__ == '__main__':
 	print "Ders 7 Geometric Transformations "
-	resize_demo()
-	rotation_demo()
+	#resize_demo()
+	#rotation_demo()
 	affine_transform_demo()
 	perspective_transform_demo()
 
