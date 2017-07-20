@@ -3,6 +3,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 
 def resize_demo():
 	wName = "Resize Demo "
@@ -101,14 +102,50 @@ def affine_transform_demo():
 	cv2.destroyAllWindows()
 
 
-def perspective_transform_demo():
-	pass
+def perspective_transform_demo():  
+	wName="Perspective Transform Demo"
+	print wName
+	vFileName ="../datas/TomAndJerry.mp4"
+	vCap= cv2.VideoCapture(vFileName)
+	height = vCap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+	width = vCap.get(cv2.CAP_PROP_FRAME_WIDTH)
+	initialCorners = np.float32([[0,0],[0,height-1],[width-1,height-1],[width-1,0]])
+	transformedCorners = np.zeros_like(initialCorners)
+	oImg = cv2.imread("../datas/manzara.jpg")
+
+	i = 0
+	fps = vCap.get(cv2.CAP_PROP_FPS)
+	while(vCap.isOpened()):
+		ret, frame = vCap.read()		
+		tImg = oImg.copy()
+		
+		transformedCorners[0] = [100+80*math.sin((i+30)*math.pi/180),100+80*math.cos((i+30)*math.pi/180)]
+		transformedCorners[1] = [100+80*math.sin(i*math.pi/180),200+80*math.cos(i*math.pi/180)]
+		transformedCorners[2] = [400+80*math.sin((i+20)*math.pi/180),310+80*math.cos((i+20)*math.pi/180)]
+		transformedCorners[3] = [400+80*math.sin(i*math.pi/180),100+80*math.cos(i*math.pi/180)]
+
+		tMatris = cv2.getPerspectiveTransform(initialCorners,transformedCorners)
+
+		# warpPerspective(src, M, dsize[, dst[, flags[, borderMode[, borderValue]]]]) -> dst
+		cv2.warpPerspective(frame,tMatris,(tImg.shape[1],tImg.shape[0]),tImg,flags=cv2.INTER_LINEAR,borderMode=cv2.BORDER_TRANSPARENT)
+		
+		for j in range(4):
+			cv2.circle(tImg,tuple(transformedCorners[j]),5,(0,0,255),3)
+			cv2.line(tImg,tuple(transformedCorners[j]),tuple(transformedCorners[(j+1)%4]),(255,0,0),3)
+		cv2.imshow(wName,tImg)
+		key = cv2.waitKey(int(1000/fps))
+		i += 2
+		if key == 27 :
+			break
+			
+	cv2.destroyWindow(wName)
+	vCap.release()
 	
 
 if __name__ == '__main__':
 	print "Ders 7 Geometric Transformations "
-	#resize_demo()
-	#rotation_demo()
+	resize_demo()
+	rotation_demo()
 	affine_transform_demo()
 	perspective_transform_demo()
 
