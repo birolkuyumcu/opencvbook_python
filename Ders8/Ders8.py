@@ -68,13 +68,15 @@ def BackgroundSubDemo(methodName):
 	wName="BackgroundSub " + methodName +" Demo	"
 	print  wName		
 	if methodName == "MOG":
-		bsMethod = cv2.createBackgroundSubtractorMOG()
+		bsMethod = cv2.bgsegm.createBackgroundSubtractorMOG()
 	elif methodName == "MOG2":
 		bsMethod = cv2.createBackgroundSubtractorMOG2(detectShadows=False)
 	elif methodName == "KNN":
 		bsMethod = cv2.createBackgroundSubtractorKNN()	
 	elif methodName == "GMG":
-		bsMethod = cv2.createBackgroundSubtractorGMG()	
+		bsMethod = cv2.bgsegm.createBackgroundSubtractorGMG()	
+	elif methodName == "CNT":
+		bsMethod = cv2.bgsegm.createBackgroundSubtractorCNT()			
 	else:
 		print 'Unknown Background Subtraction Method : ',methodName
 		return
@@ -112,7 +114,7 @@ def BackgroundSubDemo(methodName):
 
 if __name__ == '__main__':
 	print u"Ders 8 Arka plan silme "
-	methodNames = ["MOG2","KNN","MOG", "GMG"]
+	methodNames = ["MOG2","KNN","MOG", "GMG","CNT"]
 	FrameDiffDemo()
 	for methodName in methodNames:
 		try:
