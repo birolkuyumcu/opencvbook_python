@@ -72,30 +72,33 @@ def contour_demo():
     key = 0
     hierarchy = hierarchy[0]
     while True:
-        out_image = oImg.copy()
-        out_image = cv2.drawContours(out_image, [contours[i]], 0, (100,155,5), -1)
-        print_contour_info(contours[i],out_image,i,hierarchy[i])
-        cv2.imshow(wName,out_image)
-        key = cv2.waitKey(0)
-        if key == 27 :
-            break
-        if key == 2490368 : # Up
-            j = 3
-        elif key == 2621440 : # Down
-            j = 2
-        elif key == 2424832 : # Left
-            j = 1
-        elif key == 2555904 : # Right
-            j = 0
-        else :
-            j = -1
+		out_image = oImg.copy()
+		out_image = cv2.drawContours(out_image, [contours[i]], 0, (100,155,5), -1)
+		print_contour_info(contours[i],out_image,i,hierarchy[i])
+		cv2.imshow(wName,out_image)
+		key = cv2.waitKey(0)
+		res = key
+		print 'Key: ',key
+		if key == 27 :
+			break
+		if key == 2490368 or key == 8: # Up
+			j = 3
+		elif key == 2621440 or key == 13: # Down
+			j = 2
+		elif key == 2424832 or key == 32: # Left
+		#elif key == 2424832 : # Left
+			j = 1
+		elif key == 2555904 or key == 9: # Right
+			j = 0
+		else :
+			j = -1
 
-        if j == -1 :
-            continue
+		if j == -1 :
+			continue
 
-        if hierarchy[i][j] != -1 :
-            i = hierarchy[i][j]
-        print i,' ', hierarchy[i]
+		if hierarchy[i][j] != -1 :
+			i = hierarchy[i][j]
+		print i,' ', hierarchy[i]
 
     cv2.destroyWindow(wName)
 
@@ -250,7 +253,7 @@ def circle_detection_demo():
 
 def main():
     print "Ders 6 Information Extraction "
-    seed_count()
+    #seed_count()
     area_demo()
     contour_demo()
     histogram_demo()
