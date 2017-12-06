@@ -69,6 +69,7 @@ def rotation_demo():
 		rotationMat = cv2.getRotationMatrix2D((oImg.shape[1]/2,oImg.shape[0]/2),rAngle,scale)
 		outImg  = cv2.warpAffine(oImg,rotationMat,(oImg.shape[1],oImg.shape[0]))
 		cv2.imshow(wName,outImg)
+		print rAngle
 		
 	cv2.destroyWindow(wName)
 			
