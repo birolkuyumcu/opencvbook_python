@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 import cv2
 import os
 import math
@@ -10,7 +12,7 @@ def clear_images():
             os.remove(f)
 
 def image_read_write():
-    print "Image Read Write "
+    print("Image Read Write ")
     clear_images()
     try:
         """
@@ -22,38 +24,38 @@ def image_read_write():
         """
         im = cv2.imread("../datas/ebru.bmp")
     except:
-        print "Image Not Opened ..."
+        print("Image Not Opened ...")
         return
 
     cv2.namedWindow('Ebru_Bmp')
     cv2.imshow('Ebru_Bmp',im)
-    print "Ebru.bmp Loaded press any key ..."
+    print("Ebru.bmp Loaded press any key ...")
     cv2.waitKey(0)
     cv2.imwrite('../datas/ebru.png',im)
     prm=[cv2.IMWRITE_JPEG_QUALITY,50]
     cv2.imwrite('../datas/ebru.jpg',im,prm)
     im = cv2.imread("../datas/ebru.png")
     cv2.imshow('Ebru_Png',im)
-    print "Ebru_Png Loaded press any key ..."
+    print("Ebru_Png Loaded press any key ...")
     im = cv2.imread("../datas/ebru.jpg")
     cv2.imshow('Ebru_Jpg',im)
-    print "Ebru_Jpg Loaded press any key ..."
+    print("Ebru_Jpg Loaded press any key ...")
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 def video_player():
-    print  "Video Player "
+    print("Video Player ")
     vFileName ="../datas/TomAndJerry.mp4"
     wName="Video Player"
 
     try:
         vCap= cv2.VideoCapture(vFileName)
     except:
-        print "Video File " + vFileName +" Not Opened ..."
+        print("Video File " + vFileName +" Not Opened ...")
         return
 
     fps = vCap.get(cv2.CAP_PROP_FPS)
-    print "Video Running fps : ",int(fps)
+    print("Video Running fps : ",int(fps))
     while(vCap.isOpened()):
         ret, frame = vCap.read()
         if ret == False :
@@ -66,24 +68,24 @@ def video_player():
     cv2.destroyAllWindows()
 
 def webcam_player():
-    print  "WebCam Player "
+    print ("WebCam Player ")
     wName="WebCam Player"
 
     try:
         vCap= cv2.VideoCapture(0)
     except:
-        print "Web Cam Not Opened ..."
+        print("Web Cam Not Opened ...")
         return
 
     fps = vCap.get(cv2.CAP_PROP_FPS)
 
     if fps > 0 :
-        print 'fps correctly readed'
+        print("fps correctly readed")
     else:
-        print 'fps not readed correctly so fixed it '
+        print("fps not readed correctly so fixed it")
         fps = 23.0
 
-    print "WebCam capture fps : ",int(fps)
+    print("WebCam capture fps : ",int(fps))
     while(vCap.isOpened()):
         ret, frame = vCap.read()
         if ret == False :
@@ -96,24 +98,24 @@ def webcam_player():
     cv2.destroyAllWindows()
 
 def ipcam_player(ipUrl):
-    print  "IPCam Player "
+    print("IPCam Player ")
     wName=ipUrl
 
     try:
         vCap= cv2.VideoCapture(ipUrl)
     except:
-        print "Ip Cam Not Opened ..."
+        print("Ip Cam Not Opened ...")
         return
 
     fps = vCap.get(cv2.CAP_PROP_FPS)
 
     if fps > 0 :
-        print 'fps correctly readed'
+        print("fps correctly readed")
     else:
-        print 'fps not readed correctly so fixed it '
+        print("fps not readed correctly so fixed it")
         fps = 23.0
 
-    print "WebCam capture fps : ",int(fps)
+    print("IPCam capture fps : ",int(fps))
     while(vCap.isOpened()):
         ret, frame = vCap.read()
         if ret == False :
@@ -129,14 +131,10 @@ def ipcam_player(ipUrl):
 def main():
     image_read_write()
     webcam_player()
-    video_player()	
+    video_player()
 	
 	# if not work find working IPCam adress
     ipcam_player("http://195.67.26.73/mjpg/video.mjpg") 
-
-
-
-
 
 
 

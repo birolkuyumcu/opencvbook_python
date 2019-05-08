@@ -1,13 +1,15 @@
+# -*- coding: utf-8 -*-
+from __future__ import print_function
 import cv2
 import numpy as np
 import math
 
 def mat_demo():
-    print "Mat Demo"
+    print("Mat Demo")
     wName = 'Mat Demo'
     cv2.namedWindow(wName)
     im = np.random.randint(0,255,(480,640,3),np.uint8)
-    print im.shape
+    print(im.shape)
     cv2.imshow(wName,im)
     cv2.waitKey(500)
     col,row,ch = im.shape
@@ -47,16 +49,16 @@ def mat_demo():
 
 def drawing_demo():
     wName="Drawing Demo"
-    print wName
+    print(wName)
 
     bImg=cv2.imread("../datas/ebru.bmp")
     tImg=bImg.copy()
     nRows,nCols,_ = bImg.shape
-    print bImg.shape
+    print(bImg.shape)
     for i in range(361):
 
-        px1 = nCols/2
-        py1 = nRows/2
+        px1 = int(nCols/2)
+        py1 = int(nRows/2)
         px2 = int(nCols/2+(120*math.sin(i*math.pi/180)))
         py2 = int(nRows/2+(120*math.cos(i*math.pi/180)))
         cv2.line(tImg,(px1,py1),(px2,py2),(0,0,255),3)
@@ -76,7 +78,7 @@ def drawing_demo():
 
 def pixel_demo():
 	wName="Pixel Demo"
-	print wName
+	print(wName)
 
 	bImg=cv2.imread("../datas/ebru.bmp");
 	tImg=bImg.copy()
